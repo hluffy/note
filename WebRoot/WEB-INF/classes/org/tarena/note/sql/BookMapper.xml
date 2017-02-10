@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+ <mapper namespace="org.tarena.note.dao.BookMapperDao">
+ 	<select id="findById" parameterType="string" resultMap="bookMap">
+ 		select * from cn_notebook where cn_notebook_id=#{bookId}
+ 	</select>
+ 	<resultMap type="org.tarena.note.entity.Book" id="bookMap">
+ 		<collection property="notes" javaType="java.util.List" column="cn_notebook_id" ofType="org.tarena.note.entity.Note" select="findNote">
+ 		</collection>
+ 	</resultMap>
+ 	<select id="findNote" parameterType="string" resultType="org.tarena.note.entity.Note">
+ 		select * from cn_note where cn_notebook_id=#{bookId}
+ 	</select>
+ </mapper>
